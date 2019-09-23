@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/FileNimbusClient/FileNimbusClient.iml" filepath="$PROJECT_DIR$/FileNimbusClient/FileNimbusClient.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FileNimbusMiddleware/FileNimbusMiddleware.iml" filepath="$PROJECT_DIR$/FileNimbusMiddleware/FileNimbusMiddleware.iml" />
+      <module fileurl="file://$PROJECT_DIR$/FileNimbusServer/FileNimbusServer.iml" filepath="$PROJECT_DIR$/FileNimbusServer/FileNimbusServer.iml" />
+    </modules>
+  </component>
+</project>

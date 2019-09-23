@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<title>FileNimbus</title>
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+		<link type="text/css" rel="stylesheet" href="css/style.css" media="screen,projection" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	</head>
+	<body>
+		<span id="page"></span>		
+		<script type="text/javascript" src="js/materialize.min.js"></script>
+		<script>
+			var logedin = false;
+			if (logedin){
+				document.querySelector("#logedout-navbar").style.display = "none";
+				document.querySelector("#logedin-navbar").style.display = "block";
+			} else {
+				document.querySelector("#logedout-navbar").style.display = "block";
+				document.querySelector("#logedin-navbar").style.display = "none";
+			}
+			function showDialog(id) {
+
+			}
+		</script>
+	</body>
+</html>

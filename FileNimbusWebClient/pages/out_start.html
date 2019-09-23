@@ -1,0 +1,14 @@
+<nav>
+	<div class="nav-wrapper" id="logedout-navbar">
+		<a href="#!" class="brand-logo">Logo</a>
+		<a href="#" data-target="logedout-sidebar" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+		<ul class="right hide-on-med-and-down">
+			<li><a href="#!" class="waves-effect waves-light btn" onclick="showDialog('login')">Log In</a></li>
+			<li><a href="#!" class="waves-effect waves-light btn" onclick="showDialog('signin')">Sign In</a></li>
+		</ul>
+	</div>
+</nav>
+<ul class="sidenav" id="logedout-sidebar">
+	<li><a href="#!" onclick="showDialog('login')">Log In</a></li>
+	<li><a href="#!" onclick="showDialog('signin')">Sign In</a></li>
+</ul>

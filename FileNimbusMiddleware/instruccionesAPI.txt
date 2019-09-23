@@ -1,0 +1,111 @@
+-----Conexion-----
+Se envia
+{"option": "connect", "stage": 0}
+
+Devuelve
+{"option": "connect", "stage": 1, "publicKey": "clavePublica"}
+
+Se envia
+{"option": "connect", "stage": 2, "connectionKey": "claveSecretaCifradaConClavePublica"}
+
+Devuelve
+{"option": "connect", "stage": 3, "isSecure": "trueCifradoConConnectionKey"}
+-Debemos descifrar el contenido de isSecure: si devuelve true esta bien, si devuelve false es error
+
+Si ha devuelto true envias
+{"option": "connect", "stage": 4}
+-Esto activa la transferencia segura en el servidor, sin este comando las transferencias seran inseguras
+
+-----Login-----
+Se envia
+{"option": "login", "username": "usuario", "password": "passwd"}
+
+Devuelve si ha habido algun error
+{"option": "login", "status": 0, "error": "mensajeDeError"}
+
+Devuelve si todo ha ido bien
+{"option": "login", "status": 1, "privatekey": "clavePrivadaParaArchivos", "publicKey": "clavePublicaParaArchivos"}
+
+-----Logout-----
+Se envia
+{"option": "logout"}
+
+Devuelve si ha habido algun error
+{"option": "logout", "status": 0, "error": "mensajeDeError"}
+
+Devuelve si todo ha ido bien
+{"option": "login", "status": 1}
+
+-----Signin-----
+Se envia
+{"option": "signin", "username": "usuario", "password": "passwd", "privatekey": "clavePrivadaParaArchivos", "publicKey": "clavePublicaParaArchivos"}
+
+Devuelve si ha habido algun error
+{"option": "signin", "status": 0, "error": "mensajeDeError"}
+
+Devuelve si todo ha ido bien
+{"option": "signin", "status": 1}
+
+-----Upload-----
+Se envia
+{"option": "upload", "filename": "nombreDeArchivo", "secretKey": "claveSecretaDelArchivo"}
+
+Devuelve si ha habido algun error
+{"option": "upload", "status": 0, "error": "mensajeDeError"}
+
+Devuelve si todo ha ido bien
+{"option": "upload", "status": 1}
+
+Se envia
+-El archivo cifrado en forma de ByteBuffer
+
+-----Download-----
+Se envia
+{"option": "download", "fileID": "IDDelArchivo"}
+
+Devuelve si ha habido algun error
+{"option": "download", "status": 0, "error": "mensajeDeError"}
+
+Devuelve si todo ha ido bien
+{"option": "download", "status": 1, "filename": "nombreDelArchivo", "secretKey": "claveSecretaDelArchivo"}
+-Tambien devuelve un ByteBuffer que contiene el archivo cifrado
+
+-----Check-----
+Se envia
+{"option": "check"}
+
+Devuelve si ha habido algun error
+{"option": "check", "status": 0, "error": "mensajeDeError"}
+
+Devuelve si todo ha ido bien
+{"option": "check", "ids": [], "filenames": [], "shared": []}
+
+-----Delete-----
+Se envia
+{"option": "delete", "fileID": "IDDelArchivo"}
+
+Devuelve si ha habido algun error
+{"option": "delete", "status": 0, "error": "mensajeDeError"}
+
+Devuelve si todo ha ido bien
+{"option": "delete", "status": 1}
+
+-----Change Password-----
+Se envia
+{"option": "changepassword", "currentPassword": "contrasenaActual", "newPassword": "nuevaContrasena", "privateKey": "claveSecreta"}
+
+Devuelve si ha habido algun error
+{"option": "changepassword", "status": 0, "error": "mensajeDeError"}
+
+Devuelve si todo ha ido bien
+{"option": "changepassword", "status": 1}
+
+-----Change Username-----
+Se envia
+{"option": "changeusername", "username": "nombreDeUsuario"}
+
+Devuelve si ha habido algun error
+{"option": "changeusername", "status": 0, "error": "mensajeDeError"}
+
+Devuelve si todo ha ido bien
+{"option": "changeusername", "status": 1}
