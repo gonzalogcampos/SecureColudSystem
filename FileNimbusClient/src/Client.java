@@ -15,10 +15,12 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.SecureRandom;
 import java.security.spec.KeySpec;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -56,6 +58,7 @@ public class Client{
 	final String SHARE ="600";
 	final String CHANGE_PASS ="710";
 	final String CHANGE_USER ="720";
+	final String FORGOT_PASS ="730";
 	final String OTHER ="800";
 	final String CLOSE ="900";
 	
@@ -191,7 +194,18 @@ public class Client{
     	else{
             username = user;
             secureSend(username);
-            secureSend(obtenerHash(pass)); // Mandar el HASH de PWD
+            
+            byte[] hash = obtenerHash(pass);
+            
+            //Recibir sal
+            byte[] salt = (byte[]) secureReceive();
+            byte[] hashSalted = new byte[hash.length];
+            for (int i = 0; i < hashSalted.length; i++) {
+            	int is =i - salt.length*(i/salt.length);
+                hashSalted[i] = (byte) (((int) hash[i]) ^ ((int) salt[is]));
+            }
+            
+            secureSend(hashSalted); // Mandar el HASH de PWD
             
             datos = secureReceive().toString();
             if(datos.equals("E111")) {
@@ -251,26 +265,38 @@ public class Client{
     		println("You are not logged in");
     		return;
     	}
-    	print("Fichero a subir: ");
     	if(!file.exists()) {
     		println("File not found");
     		return;
     	}
-        byte[] fileContent = Files.readAllBytes(file.toPath());
+        
+        
         //Genera AES
         KeyGenerator kgen = KeyGenerator.getInstance("AES");
         kgen.init(128); //TODO Tamanyo de clave secreta
         SecretKey k = kgen.generateKey();
          
         //Encripta File AES
+        long flength = file.length();
+        if(flength>1024*1024*1024)
+        	{
+        	print("Fichero demasiafo grande: "+flength+"b - "+flength/1024+"Kb - "+flength/(1024*1024)+"Mb\n");
+        	return;
+        	}
+        
+        byte[] fileContent = Files.readAllBytes(file.toPath());
         Cipher c = Cipher.getInstance("AES");
         c.init(Cipher.ENCRYPT_MODE, k);
-        byte[] fctypyed = c.doFinal(fileContent);
+        byte[] fcrypted = new byte[1];
+        try
+        {
+        	fcrypted = c.doFinal(fileContent);
+        }catch(Exception e)
+        {
+        	println("Error: " + e.getMessage());
+        }
          
-        //Encripta K RSA
-        c = Cipher.getInstance("RSA");
-        c.init(Cipher.ENCRYPT_MODE, userKP.getPublic());
-        byte[] kcrypted = c.doFinal(k.getEncoded());
+        
          
         
         secureSend(UPLOAD);
@@ -281,7 +307,31 @@ public class Client{
 			}
 			else {
         		secureSend(file.toPath().getFileName().toString()); // Enviar el nombre
-        		secureSend(fctypyed); // Enviar el file es demasiado grande y habra que fraccionarlo
+        		
+        		int length = fcrypted.length;
+        		int nBlocks = length/1024;
+        		
+        		secureSend(length);
+        		println("Tamanyo fichero: " + length);
+        		byte[] aux;
+        		
+        		for(int i = 0; i<=nBlocks; i++)
+        		{
+        			if(i==nBlocks)
+        				aux = Arrays.copyOfRange(fcrypted, i*1024, fcrypted.length);
+        			else
+        				aux = Arrays.copyOfRange(fcrypted, i*1024, (i*1024 + 1024));
+        			
+        			secureSend(aux);
+        			
+        			print("Subiendo archivo: " + (100*i)/nBlocks + "%\n");
+        		}
+        		
+        		
+        		//Encripta K RSA
+                c = Cipher.getInstance("RSA");
+                c.init(Cipher.ENCRYPT_MODE, userKP.getPublic());
+                byte[] kcrypted = c.doFinal(k.getEncoded());
         		secureSend(kcrypted); // Enviar la clave    		
       
         		// A la espera de confirmacion
@@ -498,6 +548,47 @@ public class Client{
 		}
 		return passCambiada;
 	}
+	
+	public boolean forgotPassword(String user, String pass) throws Exception
+	{
+		boolean passCambiada = false;
+		/*
+		secureSend(FORGOT_PASS);
+		String datos = secureReceive().toString();
+		if(datos.equals("731"))
+		{
+			//TodoOK
+			secureSend(user);
+			datos = secureReceive().toString();
+			if(datos.equals("732"))
+			{
+				//Usuario valido
+				secureSend(obtenerHash(pass)); // mandar el hash de la nueva
+				crearClavesPubPriv(pass, CHANGE_PASS); // Crea nuevas claves y se las manda al server
+				datos = secureReceive().toString();
+				
+				if(datos.equals("734"))
+				{
+					//Clave guardada con exito
+					passCambiada = true;
+				}else
+				{
+					throw new Excepciones("Synchronization error");
+				}
+				
+			}else if(datos.equals("733"))
+			{
+				throw new Excepciones("Unknown user");
+			}else
+			{
+				throw new Excepciones("Synchronization error");
+			}
+		}else
+		{
+			throw new Excepciones("Synchronization error");
+		}*/
+		return passCambiada;
+	}
 
     // Se llama desde el panel de settings para comprobar si la contrasenya es correcta
     public boolean comprobarUserPassword(String pass) throws Exception {
@@ -550,8 +641,11 @@ public class Client{
     
     // Hash
     private byte[] obtenerHash(String pass) throws NoSuchAlgorithmException {
-		MessageDigest messageDig = MessageDigest.getInstance("SHA-512");
-		return messageDig.digest(pass.getBytes(StandardCharsets.UTF_8));
+    	SecureRandom random = new SecureRandom();
+    	byte bytes[] = new byte[512];
+    	random.nextBytes(bytes);
+		MessageDigest messageDig = MessageDigest.getInstance("SHA-256");
+		return messageDig.digest(pass.getBytes(StandardCharsets.UTF_16));
     }
     
     // Crear un par de claves (publica y privada)
@@ -628,7 +722,7 @@ public class Client{
     		System.out.println(o);
     	}
     }
-
+    
     // TODO Is this alright?
     public int menu() {
     	if(username == null) {

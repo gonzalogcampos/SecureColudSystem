@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="FileNimbusClient/src"/>
+	<classpathentry kind="src" path="FileNimbusMiddleware/src"/>
+	<classpathentry kind="src" path="FileNimbusServer/src"/>
+	<classpathentry kind="lib" path="extras/Java-WebSocket-1.3.9.jar"/>
+	<classpathentry kind="lib" path="extras/javax.xml.bind.jar"/>
+	<classpathentry kind="lib" path="extras/jgoodies-common-1.8.0.jar"/>
+	<classpathentry kind="lib" path="extras/jgoodies-forms-1.8.0.jar"/>
+	<classpathentry kind="lib" path="extras/org.json.jar"/>
+	<classpathentry kind="lib" path="FileNimbusMiddleware/bin/Server.jar"/>
+	<classpathentry kind="lib" path="FileNimbusMiddleware/lib/Java-WebSocket-1.3.9.jar"/>
+	<classpathentry kind="lib" path="FileNimbusMiddleware/lib/javax.xml.bind.jar"/>
+	<classpathentry kind="lib" path="FileNimbusMiddleware/lib/org.json.jar"/>
+	<classpathentry kind="lib" path="FileNimbusServer/bin/Server.jar"/>
+	<classpathentry kind="lib" path="sqlDB/mariadb-java-client-2.3.0.jar"/>
+	<classpathentry kind="output" path="out/production/FileNimbusMiddleware"/>
+</classpath>

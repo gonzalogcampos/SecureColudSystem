@@ -36,11 +36,11 @@ import javax.swing.table.DefaultTableModel;
 public class LoginWindow {
 	java.io.File chosenFile;
 	JFrame frmFilenimbus;
-	JPanel loginPanel, signUpPanel, userPanel, panelSettings;
+	JPanel loginPanel, signUpPanel, userPanel, panelSettings, forgotPanel;
 
 	JLabel statLabel, lblUser, lblOldname;
-	JTextField userField, userRegister, txtNewuser;
-	JPasswordField passField, passRegister1, passRegister2, passNewpassword, passRepeatpassword;
+	JTextField userField, userRegister, txtNewuser, userForgot;
+	JPasswordField passField, passRegister1, passRegister2, passNewpassword, passRepeatpassword, pass1Forgot, pass2Forgot;
 	
 	JTable table;
 	DefaultTableModel model;
@@ -98,6 +98,12 @@ public class LoginWindow {
 		frmFilenimbus.getContentPane().setLayout(new CardLayout(0, 0));
 		
 		
+		
+		
+		
+		/*
+		 * LOGIN PANEL
+		 */
 		loginPanel = new JPanel();
 		FlowLayout fl_loginPanel = (FlowLayout) loginPanel.getLayout();
 		fl_loginPanel.setVgap(50);
@@ -176,16 +182,117 @@ public class LoginWindow {
 		horizontalBox.add(horizontalStrut);
 		
 		JButton btnLogin = new JButton("Login");
-		
 		btnLogin.setBorder(UIManager.getBorder("Button.border"));
 		btnLogin.setMaximumSize(new Dimension(100, 25));
 		btnLogin.setMinimumSize(new Dimension(100, 25));
-		horizontalBox.add(btnLogin);
 		btnLogin.setFont(new Font("Arial", Font.PLAIN, 15));
 		btnLogin.setForeground(new Color(0, 0, 0));
 		btnLogin.setBackground(UIManager.getColor("Button.background"));
 		btnLogin.setAlignmentX(0.5f);
+		horizontalBox.add(btnLogin);
 		
+		
+		Component verticalStrut_100 = Box.createVerticalStrut(20);
+		loginBox.add(verticalStrut_100);
+		
+		JButton btnForgot = new JButton("Forgot Password");
+		btnForgot.setFont(new Font("Arial", Font.PLAIN, 15));
+		btnForgot.setAlignmentX(0.5f);
+		loginBox.add(btnForgot);
+		
+		
+		
+		/*
+		 * Forgot PANEL
+		 */
+		forgotPanel = new JPanel();
+		FlowLayout flowLayout_100 = (FlowLayout) forgotPanel.getLayout();
+		flowLayout_100.setVgap(50);
+		flowLayout_100.setHgap(50);
+		forgotPanel.setBackground(new Color(30, 144, 255));
+		frmFilenimbus.getContentPane().add(forgotPanel, "name_418755085745115");
+		
+		Box verticalBox_100 = Box.createVerticalBox();
+		verticalBox_100.setFont(new Font("Arial", Font.PLAIN, 15));
+		verticalBox_100.setEnabled(false);
+		verticalBox_100.setBorder(null);
+		forgotPanel.add(verticalBox_100);
+		
+		JLabel label_100 = new JLabel("Forgot password");
+		label_100.setFont(new Font("Arial", Font.BOLD, 16));
+		label_100.setAlignmentX(0.5f);
+		verticalBox_100.add(label_100);
+		
+		Component verticalStrut_3_100 = Box.createVerticalStrut(20);
+		verticalBox_100.add(verticalStrut_3_100);
+		
+		JLabel label_1_100 = new JLabel("User");
+		label_1_100.setHorizontalAlignment(SwingConstants.LEFT);
+		label_1_100.setFont(new Font("Arial", Font.PLAIN, 15));
+		label_1_100.setAlignmentX(0.5f);
+		verticalBox_100.add(label_1_100);
+		
+		userForgot = new JTextField();
+		userForgot.setFont(new Font("Arial", Font.PLAIN, 15));
+		userForgot.setColumns(20);
+		verticalBox_100.add(userForgot);
+		
+		Component verticalStrut_4_100 = Box.createVerticalStrut(10);
+		verticalBox_100.add(verticalStrut_4_100);
+		
+		JLabel label_2_100 = new JLabel("Password");
+		label_2_100.setHorizontalAlignment(SwingConstants.LEFT);
+		label_2_100.setFont(new Font("Arial", Font.PLAIN, 15));
+		label_2_100.setAlignmentX(0.5f);
+		verticalBox_100.add(label_2_100);
+		
+		pass1Forgot = new JPasswordField();
+		pass1Forgot.setFont(new Font("Arial", Font.PLAIN, 15));
+		pass1Forgot.setColumns(20);
+		verticalBox_100.add(pass1Forgot);
+		
+		JLabel label_3_100 = new JLabel("Repeat password");
+		label_3_100.setHorizontalAlignment(SwingConstants.LEFT);
+		label_3_100.setFont(new Font("Arial", Font.PLAIN, 15));
+		label_3_100.setAlignmentX(0.5f);
+		verticalBox_100.add(label_3_100);
+		
+		pass2Forgot = new JPasswordField();
+		pass2Forgot.setFont(new Font("Arial", Font.PLAIN, 15));
+		pass2Forgot.setColumns(20);
+		verticalBox_100.add(pass2Forgot);
+		
+		Component verticalStrut_5_100 = Box.createVerticalStrut(20);
+		verticalBox_100.add(verticalStrut_5_100);
+		
+		Box horizontalBox_1_100 = Box.createHorizontalBox();
+		verticalBox_100.add(horizontalBox_1_100);
+		
+		JButton backToLogin_100 = new JButton("Back");
+		backToLogin_100.setMinimumSize(new Dimension(100, 25));
+		backToLogin_100.setMaximumSize(new Dimension(100, 25));
+		backToLogin_100.setFont(new Font("Arial", Font.PLAIN, 15));
+		horizontalBox_1_100.add(backToLogin_100);
+		
+		Component horizontalStrut_1_100 = Box.createHorizontalStrut(20);
+		horizontalBox_1_100.add(horizontalStrut_1_100);
+		
+		JButton btnRegisterConfirm_100 = new JButton("Confirm");
+		btnRegisterConfirm_100.setMinimumSize(new Dimension(100, 25));
+		btnRegisterConfirm_100.setMaximumSize(new Dimension(100, 25));
+		btnRegisterConfirm_100.setForeground(Color.BLACK);
+		btnRegisterConfirm_100.setFont(new Font("Arial", Font.PLAIN, 15));
+		btnRegisterConfirm_100.setBorder(UIManager.getBorder("Button.border"));
+		btnRegisterConfirm_100.setBackground(SystemColor.menu);
+		btnRegisterConfirm_100.setAlignmentX(0.5f);
+		horizontalBox_1_100.add(btnRegisterConfirm_100);
+		
+		
+		
+		
+		/*
+		 * SIGNUP PANEL
+		 */
 		signUpPanel = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) signUpPanel.getLayout();
 		flowLayout.setVgap(50);
@@ -269,6 +376,13 @@ public class LoginWindow {
 		btnRegisterConfirm.setAlignmentX(0.5f);
 		horizontalBox_1.add(btnRegisterConfirm);
 		
+		
+		
+		
+		
+		/*
+		 * USER PANEL
+		 */
 		userPanel = new JPanel();
 		userPanel.setBackground(new Color(30, 144, 255));
 		frmFilenimbus.getContentPane().add(userPanel, "name_418755151851020");
@@ -651,6 +765,16 @@ public class LoginWindow {
 			}
 		});
 		
+		// Back to login button
+		backToLogin_100.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				forgotPanel.setVisible(false);
+				loginPanel.setVisible(true);
+				//frmFilenimbus.setContentPane(loginPanel);
+				limpiarCamposForgot();
+			}
+		});
+		
 		
 		// Confirm new signup button
 		btnRegisterConfirm.addActionListener(new ActionListener() {
@@ -692,6 +816,17 @@ public class LoginWindow {
 					MensajeError(ex.exErrorPersonalizado());
 					return;
 				}
+			}
+		});
+		
+		// Confirm new signup button
+		btnForgot.addActionListener(new ActionListener() 
+		{
+			public void actionPerformed(ActionEvent e) 
+			{
+				forgotPanel.setVisible(true);
+				loginPanel.setVisible(false);
+
 			}
 		});
 		
@@ -749,6 +884,15 @@ public class LoginWindow {
 						.addComponent(btnBack)
 						.addContainerGap())
 			);
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			
 			JLabel lblChangePassword = new JLabel("Change password");
 			lblChangePassword.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -879,25 +1023,27 @@ public class LoginWindow {
 			statLabel.setText(ex.exErrorPersonalizado());
 			btnLogin.setEnabled(false);
 			btnRegister.setEnabled(false);
+			btnForgot.setEnabled(false);
 		}
 		catch(Exception e){
 			statLabel.setText("Server disconnected.");
 			btnLogin.setEnabled(false);
 			btnRegister.setEnabled(false);
+			btnForgot.setEnabled(false);
 		}
 	}
 	
 	// Comprueba la longitud del campo User name
 	protected void comprobarLongUser(String userName) throws Excepciones {
-		if (!comprobarLongitud(userName, 6, 8)) {
+		if (!comprobarLongitud(userName, 6, 16)) {
 			throw new Excepciones("User: min lenght: 6 and max lenght 8");
 		}
 	}
 	
 	// Comprueba la longitud de la contrasenya
 	protected void comprobarLongPass(String pass) throws Excepciones {
-		if (!comprobarLongitud(pass, 6, 8)) {
-			throw new Excepciones("Pass: min lenght: 6 and max lenght 8");
+		if (!comprobarLongitud(pass, 6, 16)) {
+			throw new Excepciones("Pass: min lenght: 6 and max lenght 16");
 		}
 	}
 
@@ -918,6 +1064,12 @@ public class LoginWindow {
 		userRegister.setText("");
 		passRegister1.setText("");
 		passRegister2.setText("");
+	}
+	
+	protected void limpiarCamposForgot() {
+		userForgot.setText("");
+		pass1Forgot.setText("");
+		pass2Forgot.setText("");
 	}
 	
 	protected void limpiarCamposSettings() {
@@ -946,6 +1098,47 @@ public class LoginWindow {
 					limpiarCamposSettings();
 					lblOldname.setText(newName);
 				}
+			}
+		} catch(Excepciones ex) {
+			MensajeError(ex.exErrorPersonalizado());
+			return;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return;
+		}
+	}
+	
+	protected void forgotPassword() {
+		try {
+			String user = new String(userForgot.getName());
+			String newPWD = new String(pass1Forgot.getPassword());
+			String rePWD = new String(pass2Forgot.getPassword());
+			
+			// Campos vacios
+			if (newPWD.equals("")) {
+				throw new Excepciones("Empty password");
+			} else if (rePWD.equals("")) {
+				throw new Excepciones("Empty repeat password");
+			}else if (user.equals("")){
+				throw new Excepciones("Empty user");
+			}
+			
+			// Comprobar longitud del campo
+			comprobarLongPass(newPWD);
+			
+			
+			// Campos iguales
+			if (newPWD.equals(rePWD)) 
+			{
+				if (mainClient.forgotPassword(user, newPWD)) 
+				{
+					MensajeInfo("Password changed successfully!");
+					limpiarCamposForgot();
+					forgotPanel.setVisible(false);
+					loginPanel.setVisible(true);
+				}
+			} else {
+				throw new Excepciones("Passwords don't match");
 			}
 		} catch(Excepciones ex) {
 			MensajeError(ex.exErrorPersonalizado());
@@ -1186,32 +1379,42 @@ public class LoginWindow {
 	}
 	
 	// Para tener alertas de informacion general con el mismo formato
-    private void MensajeInfo(String mensaje) {
+    private void MensajeInfo(String mensaje)
+    {
     	MensajeInfo("Info", mensaje);
     }
-    private void MensajeInfo(String titulo, String mensaje) {
+    
+    private void MensajeInfo(String titulo, String mensaje)
+    {
     	JOptionPane.showMessageDialog(frmFilenimbus, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
 	}
     
  // Para tener una alerta de errores general con el mismo formato
-    private void MensajeError(String mensaje) {
+    private void MensajeError(String mensaje)
+    {
     	JOptionPane.showMessageDialog(frmFilenimbus, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
 	}
     
-    private void login() {
-    	try {
+    private void login()
+    {
+    	try
+    	{
     		String userName = userField.getText();
 			String pwd = new String(passField.getPassword());
 			
 			// Comprobar campos vacios
-			if (userName.equals("")) {
+			if (userName.equals(""))
+			{
 				throw new Excepciones("Empty user");
-			} else if (pwd.equals("")) {
+			}
+			else if (pwd.equals("")) 
+			{
 				throw new Excepciones("Empty password");
 			}
 			
 			// Call connect method
-			if(mainClient.login(userName, pwd)){
+			if(mainClient.login(userName, pwd))
+			{
 				statLabel.setText("Conectado.");
 				loginPanel.setVisible(false);
 				userPanel.setVisible(true);

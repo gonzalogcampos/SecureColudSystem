@@ -11,7 +11,7 @@ public class GestorBD {
 	final String SQL_DB = "filenimbusdb";
 	final String SQL_USER = "root";
 	final String SQL_USERPWD = "";
-	//final String SQL_DRIVER = "com.mysql.jdbc.Driver";
+	final String SQL_DRIVER = "com.mysql.jdbc.Driver";
 	final String DB_URL = "jdbc:mysql://" + SQL_IP + ":" + SQL_PORT + "/" + SQL_DB;
 	
 	Statement sqlSentence;
@@ -29,10 +29,14 @@ public class GestorBD {
 		/* Registrar JDBC driver:
 		   A partir de JDK 6, los drivers JDBC 4 ya se registran automaticamente 
 		   y no es necesario el Class.forName(), solo que esten en el classpath de la JVM.*/
-		//Class.forName(SQL_DRIVER);
+		try {
+			//Class.forName(SQL_DRIVER);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		// Abrir conexion
-	    System.out.println("Connecting to database...");
+	    //System.out.println("Connecting to database...");
 		sqlConnection = DriverManager.getConnection(DB_URL, SQL_USER, SQL_USERPWD);
 	}
 	
@@ -43,16 +47,28 @@ public class GestorBD {
 		return resultados;
 	}
 	
-	public void borrarArchivo(int userID, int idArchivo) throws SQLException {
-		System.out.println("Creating delete statement...");
+	public boolean borrarArchivo(int userID, int idArchivo) throws SQLException {
+		boolean r = false;
+		//System.out.println("Creating delete statement...");
 		
 		sqlSentence = sqlConnection.createStatement();
 		String sql = "DELETE FROM fileuser WHERE user=" + userID + " AND file=" + idArchivo;
 		sqlSentence.executeUpdate(sql);
+		ResultSet rs = sqlSentence.executeQuery("SELECT * FROM fileuser WHERE file="+idArchivo);
+		if(!rs.next())
+		{
+			sql = "DELETE FROM file WHERE id=" + idArchivo;
+			sqlSentence.executeUpdate(sql);
+			r = true;
+		}else {
+			System.out.println("More");
+		}
+		
+		return r;
 	}
 	
 	public int cambiarUser(int userID, String name) throws SQLException {
-		System.out.println("Creating update statement...");
+		//System.out.println("Creating update statement...");
 		
 		sqlSentence = sqlConnection.createStatement();
 		String sql = "UPDATE user SET user.user='"+name+"' WHERE id = "+userID;
@@ -85,13 +101,10 @@ public class GestorBD {
 		return resultado;
 	}
 	
-	public ResultSet subirArchivo(String filename, byte[] file) throws SQLException {
+	public ResultSet subirArchivo(String filename) throws SQLException {
 		ResultSet resultado = null;
-		
-		String sentence = "INSERT INTO file(data, name) " + "VALUES(?, '" + filename + "')";
+		String sentence = "INSERT INTO file(name) " + "VALUES('" + filename + "')";
 		preparedSentence = sqlConnection.prepareStatement(sentence, PreparedStatement.RETURN_GENERATED_KEYS);
-		 
-		preparedSentence.setBytes(1, file);
 		preparedSentence.executeUpdate();
 		resultado = preparedSentence.getGeneratedKeys();
 		return resultado;
@@ -112,7 +125,7 @@ public class GestorBD {
 	}
 	
 	public void close() throws SQLException {
-		System.out.println("Close conection BD...");
+		//System.out.println("Close conection BD...");
 		if(preparedSentence!=null)
 			preparedSentence.close();
 		
